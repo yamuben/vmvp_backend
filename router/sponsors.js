@@ -8,7 +8,7 @@ const router = express.Router();
 //Include other resource routers
 const studentRoute = require('./students');
 
-// Re-route into other resource routers
+// Route into other resource routers
 router.use('/sponsorId',studentRoute);
 
 router
