@@ -1,23 +1,16 @@
 const express = require('express');
-const{
-    getSponsors,addSponsor,updateSponsor
+const {
+  getSponsors,
+  addSponsor,
+  updateSponsor,
 } = require('../controllers/sponsors');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-//Include other resource routers
-const studentRoute = require('./students');
+router.route('/').get(getSponsors).post(addSponsor);
 
-// Route into other resource routers
-router.use('/sponsorId',studentRoute);
+router.route('/:id').put(updateSponsor);
 
-router
-.route('/')
-.get(getSponsors)
-.post(addSponsor)
-
-router
-.route('/:id')
-.put(updateSponsor)
+router.route('/:studentId');
 
 module.exports = router;

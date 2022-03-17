@@ -1,22 +1,15 @@
-const express = require('express')
 const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
 const Student = require('../models/Student')
 const Sponsor = require('../models/Sponsor')
 const cloudinary = require('cloudinary').v2
+
 // @ Desc Get students
 // @ Route GET /api/v1/students
 // @ Access Public
 exports.getStudents = asyncHandler(async(req,res,next)=>{
-    let query;
-    console.log(req.params.sponsorId)
-    if (req.params.sponsorId){
-       query = Student.find({sponsor: req.params.sponsorId});
-
-    } 
-    else {
-        query = Student.find()
-    }
-    const students = await query;
+   
+    const students = await Student.find();
     res.status(200).json({
         success:true,
         count: students.length,
