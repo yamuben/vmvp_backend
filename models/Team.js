@@ -4,7 +4,7 @@ const teamSchema = new mongoose.Schema({
     picture:String,
     title:String,
     description:String,
-    status:String,
+    status:false,
     socialMedia:['Linkedin','Facebook','Instagram','Twitter']
 });
 

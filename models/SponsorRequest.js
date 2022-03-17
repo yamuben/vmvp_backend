@@ -1,18 +1,28 @@
 const mongoose = require('mongoose');
 const sponsorRequestSchema = new mongoose.Schema({
-    sponsor:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Sponsor',
-        required:true 
+  sponsor: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Sponsor',
+    required: true,
+  },
+  student: [
+    {
+      studentId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Student',
+        //required: true,
+      },
+      donation: Number,
+      status: {
+        type: Boolean,
+        default: true,
+      },
     },
-    student:[{
-        studentId:{type:mongoose.Schema.ObjectId,
-        ref:'Student',
-        required:true}},
-        {Donation:Number},
-        {status:false}],
-    status:false
-
+  ],
+  status: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-module.exports = mongoose.model('SponsorRequest',sponsorRequestSchema);
+module.exports = mongoose.model('SponsorRequest', sponsorRequestSchema);
