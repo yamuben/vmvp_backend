@@ -1,13 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const sponsorSchema = new mongoose.Schema({
   name: String,
   email: {
     type: String,
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Please add a valid email',
+      "Please add a valid email",
     ],
-    unique: true,
   },
   donation: Number,
   country: String,
@@ -21,4 +20,4 @@ const sponsorSchema = new mongoose.Schema({
     default: true,
   },
 });
-module.exports = mongoose.model('Sponsor', sponsorSchema);
+module.exports = mongoose.model("Sponso", sponsorSchema);

@@ -6,6 +6,7 @@ const errorHandler = require('./middleware/error');
 const colors = require('colors');
 const cloudinaryUpload = require('./utils/cloudinary');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -25,7 +26,7 @@ const sponsorRequest = require('./router/sponsorRequests');
 //const app = express();
 
 const app = express();
-
+app.use(cors());
 //Body Parser
 app.use(express.json());
 // logger

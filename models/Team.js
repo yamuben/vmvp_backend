@@ -1,11 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const teamSchema = new mongoose.Schema({
-    name:String,
-    picture:String,
-    title:String,
-    description:String,
-    status:false,
-    socialMedia:['Linkedin','Facebook','Instagram','Twitter']
+  name: String,
+  picture: String,
+  title: String,
+  role:{
+      type: String,
+      enum:["board","team"],
+      default:"board"
+  },
+  description: String,
+  status: {
+    type: Boolean,
+    default: true,
+  },
+  socialMedia: {
+    linkedin: String,
+    facebook: String,
+    instagram: String,
+    twitter: String,
+  },
 });
 
-module.exports = mongoose.model('Team',teamSchema);
+module.exports = mongoose.model("Teammates", teamSchema);

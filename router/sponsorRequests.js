@@ -1,6 +1,6 @@
 const express = require('express')
 const {
-    getSponsorRequest,addSponsorRequest,updateSponsorRequest} = require ('../controllers/sponsorRequests')
+    getSponsorRequest,addSponsorRequest,updateSponsorRequest, getSponsorByStudentId} = require ('../controllers/sponsorRequests')
 const router = express.Router()
 
 router
@@ -9,7 +9,12 @@ router
 .post(addSponsorRequest)
 
 router
-.route('/:id')
-.put(updateSponsorRequest)
+.route('/getone/:id')
+.get(getSponsorByStudentId);
+
+router
+.route('/update/:id')
+.patch(updateSponsorRequest)
+
 
 module.exports = router

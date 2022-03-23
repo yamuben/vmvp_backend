@@ -1,9 +1,9 @@
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const sponsorRequest = require('../models/SponsorRequest');
-const Sponsor = require('../models/Sponsor');
-const Student = require('../models/Student');
-const cloudinary = require('cloudinary').v2;
+const asyncHandler = require("../middleware/async");
+const ErrorResponse = require("../utils/errorResponse");
+const sponsorRequest = require("../models/SponsorRequest");
+const Sponsor = require("../models/Sponsor");
+const Student = require("../models/Student");
+const cloudinary = require("cloudinary").v2;
 
 // @ Desc Get all sponsors
 // @ Route GET /api/v1/sponsors
@@ -21,19 +21,25 @@ exports.getSponsors = asyncHandler(async (req, res, next) => {
 // @ Route POST /api/v1/sponsors/
 // @ Access Private
 exports.addSponsor = asyncHandler(async (req, res, next) => {
-  const StudentId = req.params.studentId;
-  if (!StudentId) {
+  const _Student = await Student.findById(req.params.id);
+  if (!_Student) {
     next(
       new ErrorResponse(`No Resource with the id ${req.params.studentId}`),
       404
     );
   }
-  console.log(StudentId);
+  // console.log(StudentId);
   const sponsor = await Sponsor.create(req.body);
   await sponsorRequest.create({
     sponsor: sponsor._id,
-    student: [{ studentId: StudentId, donation: req.body.donation }],
+    student: req.params.id,
+    donation: req.body.donation,
   });
+  await Student.findByIdAndUpdate(
+    req.params.id,
+    { sponsor: sponsor._id, isAvailable: false },
+    { new: true }
+  );
   res.status(200).json({
     success: true,
     data: sponsor,

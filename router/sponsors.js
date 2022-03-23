@@ -8,6 +8,7 @@ const {
 const router = express.Router({ mergeParams: true });
 
 router.route('/').get(getSponsors).post(addSponsor);
+router.route('/create/:id').post(addSponsor);
 
 router.route('/:id').put(updateSponsor);
 

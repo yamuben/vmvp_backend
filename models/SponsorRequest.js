@@ -1,28 +1,32 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const sponsorRequestSchema = new mongoose.Schema({
   sponsor: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Sponsor',
+    ref: "Sponso",
     required: true,
   },
-  student: [
-    {
-      studentId: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Student',
-        //required: true,
-      },
-      donation: Number,
-      status: {
-        type: Boolean,
-        default: true,
-      },
-    },
-  ],
-  status: {
-    type: Boolean,
-    default: true,
+  student: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Studen",
+    required: true,
   },
+  donation: Number,
+  status: {
+    type: String,
+    enum: ["pending", "declined", "accepted"],
+    default: "pending",
+  }
 });
 
-module.exports = mongoose.model('SponsorRequest', sponsorRequestSchema);
+
+sponsorRequestSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "sponsor"
+  });
+  this.populate({
+      path:"student"
+  });
+  next();
+});
+
+module.exports = mongoose.model("SponsorReques", sponsorRequestSchema);

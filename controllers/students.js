@@ -56,17 +56,18 @@ exports.updateStudent = asyncHandler(async(req,res,next)=>{
 // @ Access Private
 exports.studentPhotoUpload= asyncHandler(async(req,res,next)=>{
     
-    const student = await Student.findById(req.params.id)
-    if(!student){
-        return  next(new ErrorResponse(`Student not found with id of ${req.params.id}`,404));
-    } 
+    // const student = await Student.findById(req.params.id)
+    // if(!student){
+    //     return  next(new ErrorResponse(`Student not found with id of ${req.params.id}`,404));
+    // } 
     
     if (!req.files){
         return  next(new ErrorResponse(`Please upload a file`,400));
     }
     
-    const file = req.files.file;
+    const file = req.files.files;
 
+    // console.log("@@@@@@@",req.files)
     //Make sure the image is a photo
     if(!file.mimetype.startsWith('image')){
         return  next(new ErrorResponse(`Please upload an image file`,400));  
@@ -80,11 +81,12 @@ exports.studentPhotoUpload= asyncHandler(async(req,res,next)=>{
         if(err){
             return  next(new ErrorResponse(`Problem with uploading the image `,500)); 
         }
-        await Student.findByIdAndUpdate(req.params.id, { picture: result.secure_url });
+        // await Student.findByIdAndUpdate(req.params.id, { picture: result.secure_url });
 
         res.status(200).json({
             success:true,
-            data:file.name
+            // data:file.name
+            secure_url:result.secure_url
         });
 
     });

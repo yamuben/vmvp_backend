@@ -12,6 +12,7 @@ const sponsorRoute = require('./sponsors');
 
 const router = express.Router();
 
+router.route('/photo').post(studentPhotoUpload);
 // Re-route into other resource routers
 router.use('/:studentId/sponsor', sponsorRoute);
 
@@ -19,6 +20,5 @@ router.route('/').get(getStudents).post(addStudent);
 
 router.route('/:id').put(updateStudent);
 
-router.route('/:id/photo').put(studentPhotoUpload);
 
 module.exports = router;
