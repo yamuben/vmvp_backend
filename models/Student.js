@@ -11,6 +11,7 @@ const studentSchema = new mongoose.Schema({
   sponsor: {
     type: mongoose.Schema.ObjectId,
     ref: "Sponso",
+    default:null
     //required:true
   },
   isAvailable: {
@@ -19,7 +20,16 @@ const studentSchema = new mongoose.Schema({
   },
   isActive: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
+
+
+studentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "sponsor"
+  })
+  next();
+});
+
 module.exports = mongoose.model("Studen", studentSchema);

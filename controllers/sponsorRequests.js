@@ -1,6 +1,7 @@
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const SponsorRequest = require("../models/SponsorRequest");
+const StudentInfos = require("../models/Student");
 
 // @ Desc Get all sponsorRequest
 // @ Route GET /api/v1/sponsorRequest
@@ -52,6 +53,15 @@ exports.updateSponsorRequest = asyncHandler(async (req, res, next) => {
     next(new ErrorResponse(`No Resource with the id ${req.params.id}`), 404);
   }
 
+  if(req.body?.status=== "declined"){
+   const std= await StudentInfos.findByIdAndUpdate(sponsorRequest?.student._id,{isAvailable:true,sponsor:null},{new:true})
+  //  console.log("####",std)
+  }
+  else if(req.body?.status=== "accepted"){
+    await StudentInfos.findByIdAndUpdate(sponsorRequest?.student._id,{isAvailable:false,sponsor:sponsorRequest?.sponsor._id},{new:true})
+
+  }
+  // console.log(sponsorRequest)
   res.status(201).json({
     success: true,
     data: sponsorRequest,
