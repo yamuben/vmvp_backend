@@ -11,7 +11,7 @@ router
 
 router
 .route('/:id')
-.put(updateTeam)
+.patch(updateTeam)
 
 router
 .route('/:id/photo')
