@@ -16,6 +16,22 @@ exports.getTeam = asyncHandler(async(req,res,next)=>{
     });
 
 });
+// @ Desc Get Team 
+// @ Route GET /api/v1/team
+// @ Access Public
+exports.getTeamAll = asyncHandler(async(req,res,next)=>{
+   
+    const team = await Team.find({role:"team"});
+    const board = await Team.find({role:"board"});
+    res.status(200).json({
+        success:true,
+        countTeam: team.length,
+        countBoard: board.length,
+        dataTeam: team,
+        dataBoard: board
+    });
+
+});
 
 // @ Desc Add Team
 // @ Route POST /api/v1/team

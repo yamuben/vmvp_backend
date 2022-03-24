@@ -21,4 +21,4 @@ const teamSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Teammates", teamSchema);
+module.exports = mongoose.model("Teammate", teamSchema);
